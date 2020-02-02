@@ -1,1 +1,1 @@
-# bigproject
+# bigproject Рассылка сообщений

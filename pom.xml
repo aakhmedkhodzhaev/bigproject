@@ -4,14 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.job4j</groupId>
-    <artifactId>job4j</artifactId>
+    <groupId>ru.work</groupId>
+    <artifactId>tasks</artifactId>
     <packaging>pom</packaging>
     <version>3.0</version>
     <modules>
-        <module>chapter_001</module>
-        <module>Middle</module>
-        <module>Level_Middle</module>
+        <module>edemail</module>
     </modules>
 
     <properties>
