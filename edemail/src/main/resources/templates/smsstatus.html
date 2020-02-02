@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>All Transfers</title>
+</head>
+<body>
+<div th:switch="${transfers}">
+    <h2 th:case="null">No users found!</h2>
+    <div th:case="*">
+        <h2>Transfers</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>transferId</th>
+                <th>rsId</th>
+                <th>statusId</th>
+                <th>notificationId</th>
+                <th>recipient</th>
+                <th>sentDate</th>
+                <th>sentStatusUpdate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="smsstatus : ${transfers}">
+                <td th:text="${smsstatus.transferId}"></td>
+                <td th:text="${smsstatus.rsId}"></td>
+                <td th:text="${smsstatus.statusId}"></td>
+                <td th:text="${smsstatus.notificationId}"></td>
+                <td th:text="${smsstatus.recipient}"></td>
+                <td th:text="${smsstatus.sentDate}"></td>
+                <td th:text="${smsstatus.sentStatusUpdate}"></td>
+                <td><a th:href="@{smsstatus/{id}(id=${smsstatus.transferId})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/send">Create Notification</a></p>
+</div>
+</body>
+</html>
