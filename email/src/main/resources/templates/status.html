@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+</head>
+<body>
+<div th:switch="${notify}">
+    <h2 th:case="null">Notifications no found!</h2>
+    <div th:case="*">
+        <h2>Status</h2>
+        <table border="1" cellpadding="6" cellspacing="1">
+            <thead>
+            <tr>
+                <th>notificationType</th>
+                <th>recipient</th>
+                <th>message</th>
+                <th>statusValue</th>
+                <th>sendDate</th>
+                <th>lastUpdate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="notifications   : ${notify}">
+                <td th:text="${notifications.notificationType}"></td>
+                <td th:text="${notifications.recipient}"></td>
+                <td th:text="${notifications.message}"></td>
+                <td th:text="${notifications.statusValue}"></td>
+                <td th:text="${notifications.sendDate}"></td>
+                <td th:text="${notifications.lastUpdate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/send">Send notifications</a></p>
+</div>
+</body>
+</html>

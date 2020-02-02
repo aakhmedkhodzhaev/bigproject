@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Notification sent</title>
+</head>
+<body>
+<center>
+    <!--/*@thymesVar id="nsId" type="Long"*/-->
+    <span th:text="'Delivery message status is available by number: ' + ${nsId}"></span>
+    <p><a href="/status">Status list notifications</a></p>
+</center>
+</body>
+</html>

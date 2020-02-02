@@ -10,6 +10,7 @@
     <version>3.0</version>
     <modules>
         <module>edemail</module>
+        <module>email</module>
     </modules>
 
     <properties>
