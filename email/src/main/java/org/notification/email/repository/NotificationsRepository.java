@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface NotificationsRepository extends JpaRepository<Notifications, Long> {
 
-    @Query(value = "SELECT * FROM notifications WHERE status = :statusValue", nativeQuery = true)
+  /*@Query(value = "SELECT * FROM notifications WHERE status = :statusValue", nativeQuery = true)
     List<Notifications> findByStatus(@Param("statusValue") String statusValue);
 
     @Modifying
     @Query(value = "UPDATE notifications n SET n.status=? WHERE n.ns_id=?", nativeQuery = true)
-    int setValue(String statusValue, Long nsId);
+    int setValue(String statusValue, Long nsId);*/
 }

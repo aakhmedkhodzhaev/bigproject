@@ -13,7 +13,7 @@ import java.util.List;
 
 @EnableScheduling
 public class ScheduledTasks {
-
+/*
         private final NotificationsRepository notificationsRepository;
         private final mailSenderService msService;
         private final Notifications notifications;
@@ -39,5 +39,5 @@ public class ScheduledTasks {
             msService.sendEmail(email);
             }
         //    return notificationsRepository.setValue("Sent", notifications.getNsId());
-    }
+    }*/
 }

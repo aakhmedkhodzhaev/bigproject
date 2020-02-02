@@ -22,14 +22,11 @@ public class NotificationsController {
     private final mailSenderService msService;
     private final NotificationsService notificationsService;
 
-    private ScheduledTasks scheduledTasks;
-
     @Autowired
-    public NotificationsController(NotificationsRepository notificationsRepository, mailSenderService msService, NotificationsService notificationsService/*, ScheduledTasks scheduledTasks*/) {
+    public NotificationsController(NotificationsRepository notificationsRepository, mailSenderService msService, NotificationsService notificationsService) {
         this.notificationsRepository = notificationsRepository;
         this.msService = msService;
         this.notificationsService = notificationsService;
-//      this.scheduledTasks = scheduledTasks;
     }
 
 
@@ -68,8 +65,6 @@ public class NotificationsController {
         List<Notifications> notify = notificationsService.findAll();
         ModelAndView modelAndView = new ModelAndView("status");
         modelAndView.addObject("notify", notify);
-        notificationsRepository.findByStatus("Wait");
-        scheduledTasks.sentNotifications();
         return modelAndView;
     }
 
