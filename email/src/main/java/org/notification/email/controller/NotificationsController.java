@@ -3,8 +3,8 @@ package org.notification.email.controller;
 import org.notification.email.entity.Notifications;
 import org.notification.email.repository.NotificationsRepository;
 import org.notification.email.service.NotificationsService;
+import org.notification.email.service.ScheduledTasksService;
 import org.notification.email.service.mailSenderService;
-import org.notification.email.tasks.ScheduledTasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
@@ -21,12 +21,14 @@ public class NotificationsController {
     private final NotificationsRepository notificationsRepository;
     private final mailSenderService msService;
     private final NotificationsService notificationsService;
+    private final ScheduledTasksService stService;
 
     @Autowired
-    public NotificationsController(NotificationsRepository notificationsRepository, mailSenderService msService, NotificationsService notificationsService) {
+    public NotificationsController(NotificationsRepository notificationsRepository, mailSenderService msService, NotificationsService notificationsService, ScheduledTasksService stService) {
         this.notificationsRepository = notificationsRepository;
         this.msService = msService;
         this.notificationsService = notificationsService;
+        this.stService = stService;
     }
 
 
@@ -42,14 +44,14 @@ public class NotificationsController {
 
         notificationsRepository.save(notifications);
 
-        SimpleMailMessage email = new SimpleMailMessage();
+   /*   SimpleMailMessage email = new SimpleMailMessage();
 
         email.setTo(notifications.getRecipient());
         email.setSubject("email");
         email.setFrom("aakhmedkhodzhaev@gmail.com");
         email.setText(notifications.getMessage());
 
-        msService.sendEmail(email);
+        msService.sendEmail(email);*/
 
         modelAndView.addObject("Recipient", notifications.getRecipient());
         modelAndView.setViewName("welldone");
@@ -63,6 +65,7 @@ public class NotificationsController {
       /*Iterable<Notifications> notify;
         notify = notificationsRepository.findAll();*/
         List<Notifications> notify = notificationsService.findAll();
+        stService.sentNotifications();
         ModelAndView modelAndView = new ModelAndView("status");
         modelAndView.addObject("notify", notify);
         return modelAndView;
