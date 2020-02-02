@@ -28,7 +28,7 @@ public class ScheduledTasksService {
         public void sentNotifications(){
             List<Notifications> nList = scheduledTaskRepository.findByStatus("Wait");
             SimpleMailMessage email = new SimpleMailMessage();
-      //    for(int i=0; i<nList.size(); i++){
+
             for(Notifications notifications: nList){
             email.setTo(notifications.getRecipient());
             email.setSubject("email");
@@ -36,9 +36,7 @@ public class ScheduledTasksService {
             email.setText(notifications.getMessage());
 
             msService.sendEmail(email);
-//          scheduledTaskRepository.setValue("Sent", notifications.getNsId());
+            scheduledTaskRepository.setValue("Sent");
             }
-
-        //    return notificationsRepository.setValue("Sent", notifications.getNsId());
     }
 }
