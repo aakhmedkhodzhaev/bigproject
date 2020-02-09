@@ -17,6 +17,7 @@ public class ScheduledTasksService {
         private final NotificationsRepository notificationsRepository;
         private final MailSenderService msService;
 
+
     @Autowired
     public ScheduledTasksService( NotificationsRepository notificationsRepository, MailSenderService msService) {
         this.notificationsRepository = notificationsRepository;
@@ -24,13 +25,24 @@ public class ScheduledTasksService {
     }
 
         @Async
-        @Scheduled(cron="0 0/5 * 1/1 * *")//(fixedRate = 30000)
+        @Scheduled(cron="0 0/2 * 1/1 * *")//(fixedRate = 30000)
         public void sentNotifications(){
-            List<Notifications> nList = notificationsRepository.findByStatus("Wait");
+
+            List<Notifications> nList = notificationsRepository.findByStatus(Status.WAIT.name());
 
             for(Notifications notifications: nList) {
-                msService.sendEmail(notifications);
-                notificationsRepository.setValue("Sent");
+                try{
+                    msService.sendEmail(notifications);
+                    notifications.setStatusValue(Status.SENT.name());
+                    notificationsRepository.save(notifications);
+
+                } catch(Exception e){
+                    e.getStackTrace();
+                    notifications.setStatusValue(Status.ERRORS.name());
+                    notificationsRepository.save(notifications);
+                }
+
             }
+
     }
 }

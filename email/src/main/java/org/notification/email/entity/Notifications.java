@@ -39,7 +39,7 @@ public class Notifications {
 
 /*  @Column(name="status")
     @Enumerated(EnumType.STRING)
-    private Status statusValue; */
+    private Status statusValue;*/
 
     @Column(name="status")
     @Value("${notifications.status}")

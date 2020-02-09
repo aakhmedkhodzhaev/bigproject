@@ -1,6 +1,7 @@
 package org.notification.email.controller;
 
 import org.notification.email.entity.Notifications;
+import org.notification.email.entity.Status;
 import org.notification.email.repository.NotificationsRepository;
 import org.notification.email.service.NotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class NotificationsController {
 
     @RequestMapping(value="/send", method=RequestMethod.POST)
     public ModelAndView registerNotification(ModelAndView modelAndView, Notifications notifications){
+
+        notifications.setStatusValue(Status.WAIT.name());
 
         notificationsRepository.save(notifications);
 
