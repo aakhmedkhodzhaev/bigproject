@@ -3,8 +3,6 @@ package org.notification.email.controller;
 import org.notification.email.entity.Notifications;
 import org.notification.email.repository.NotificationsRepository;
 import org.notification.email.service.NotificationsService;
-import org.notification.email.service.ScheduledTasksService;
-import org.notification.email.service.mailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,16 +16,12 @@ import java.util.List;
 public class NotificationsController {
 
     private final NotificationsRepository notificationsRepository;
-    private final mailSenderService msService;
     private final NotificationsService notificationsService;
-    private final ScheduledTasksService stService;
 
     @Autowired
-    public NotificationsController(NotificationsRepository notificationsRepository, mailSenderService msService, NotificationsService notificationsService, ScheduledTasksService stService) {
+    public NotificationsController(NotificationsRepository notificationsRepository, NotificationsService notificationsService) {
         this.notificationsRepository = notificationsRepository;
-        this.msService = msService;
         this.notificationsService = notificationsService;
-        this.stService = stService;
     }
 
 
@@ -43,15 +37,6 @@ public class NotificationsController {
 
         notificationsRepository.save(notifications);
 
-   /*   SimpleMailMessage email = new SimpleMailMessage();
-
-        email.setTo(notifications.getRecipient());
-        email.setSubject("email");
-        email.setFrom("aakhmedkhodzhaev@gmail.com");
-        email.setText(notifications.getMessage());
-
-        msService.sendEmail(email);*/
-
         modelAndView.addObject("Recipient", notifications.getRecipient());
         modelAndView.setViewName("welldone");
 
@@ -59,10 +44,10 @@ public class NotificationsController {
 
     }
 
-    @RequestMapping("/status"   )
+    @RequestMapping("/status")
     public ModelAndView findAll (){
         List<Notifications> notify = notificationsService.findAll();
-        stService.sentNotifications();
+//      stService.sentNotifications(); // в данном случаи вызывает отправку уведомления
         ModelAndView modelAndView = new ModelAndView("status");
         modelAndView.addObject("notify", notify);
         return modelAndView;

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Data
 @Table(name="notifications")
@@ -36,8 +37,12 @@ public class Notifications {
     @Column(name="message")
     private String message;
 
+/*  @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private Status statusValue; */
+
     @Column(name="status")
-    @Value("Sent")
+    @Value("${notifications.status}")
     private String statusValue;
 
     @CreationTimestamp
