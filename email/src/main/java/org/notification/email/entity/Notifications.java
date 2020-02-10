@@ -12,7 +12,6 @@ package org.notification.email.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -42,8 +41,8 @@ public class Notifications {
     private Status statusValue;
 
     @CreationTimestamp
-    @Column(name="send_date")
-    private LocalDateTime sendDate;
+    @Column(name="creation_date")
+    private LocalDateTime creationDate;
 
     @UpdateTimestamp
     @Column(name="lastupdate")
