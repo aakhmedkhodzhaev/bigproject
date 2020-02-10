@@ -37,13 +37,9 @@ public class Notifications {
     @Column(name="message")
     private String message;
 
-/*  @Column(name="status")
-    @Enumerated(EnumType.STRING)
-    private Status statusValue;*/
-
     @Column(name="status")
-    @Value("${notifications.status}")
-    private String statusValue;
+    @Enumerated(EnumType.STRING)
+    private Status statusValue;
 
     @CreationTimestamp
     @Column(name="send_date")

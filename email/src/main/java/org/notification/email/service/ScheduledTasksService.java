@@ -33,12 +33,12 @@ public class ScheduledTasksService {
             for(Notifications notifications: nList) {
                 try{
                     msService.sendEmail(notifications);
-                    notifications.setStatusValue(Status.SENT.name());
+                    notifications.setStatusValue(Status.SENT);
                     notificationsRepository.save(notifications);
 
                 } catch(Exception e){
                     e.getStackTrace();
-                    notifications.setStatusValue(Status.ERRORS.name());
+                    notifications.setStatusValue(Status.ERRORS);
                     notificationsRepository.save(notifications);
                 }
 

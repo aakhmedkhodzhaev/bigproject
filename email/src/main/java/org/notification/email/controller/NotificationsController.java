@@ -36,7 +36,7 @@ public class NotificationsController {
     @RequestMapping(value="/send", method=RequestMethod.POST)
     public ModelAndView registerNotification(ModelAndView modelAndView, Notifications notifications){
 
-        notifications.setStatusValue(Status.WAIT.name());
+        notifications.setStatusValue(Status.WAIT);
 
         notificationsRepository.save(notifications);
 
