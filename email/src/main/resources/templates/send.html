@@ -5,19 +5,19 @@
     <title>Notification</title>
 </head>
 <body>
-<form action="#" th:action="@{/send}" th:object="${Notifications}" method="post">
+<form action="#" th:action="@{/send}" method="post">
     <table>
         <tr>
             <td><label for="notificationType">Notification Type</label></td>
-            <td><input th:field="*{notificationType}" id="notificationType" type="text" name="notificationType"></input></td>
+            <td><input id="notificationType" type="text" name="notificationType"></input></td>
         </tr>
         <tr>
             <td><label for="recipient">recipient</label></td>
-            <td><input th:field="*{recipient}" id="recipient" type="text" name="recipient"></input></td>
+            <td><input id="recipient" type="text" name="recipient"></input></td>
         </tr>
         <tr>
             <td><label for="message">message</label></td>
-            <td><input th:field="*{message}" id="message" type="text" name="message"></input></td>
+            <td><input id="message" type="text" name="message"></input></td>
         </tr>
          <!-- <td><input type="hidden" name="statusValue" value="Wait"/> -->
         <tr>

@@ -2,6 +2,7 @@ package org.notification.email.controller;
 
 import org.notification.email.entity.Notifications;
 import org.notification.email.entity.Status;
+import org.notification.email.entity.Type;
 import org.notification.email.repository.NotificationsRepository;
 import org.notification.email.service.NotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ public class NotificationsController {
 
     @RequestMapping(value="/send", method = RequestMethod.GET)
     public ModelAndView notificationsRequest(ModelAndView modelAndView, Notifications notifications){
-        modelAndView.addObject("Notifications", notifications);
         modelAndView.setViewName("send");
         return modelAndView;
     }
@@ -36,6 +36,9 @@ public class NotificationsController {
     @RequestMapping(value="/send", method=RequestMethod.POST)
     public ModelAndView registerNotification(ModelAndView modelAndView, Notifications notifications){
 
+        notifications.getNotificationType();
+        notifications.getRecipient();
+        notifications.getMessage();
         notifications.setStatusValue(Status.WAIT);
 
         notificationsRepository.save(notifications);
@@ -50,7 +53,6 @@ public class NotificationsController {
     @RequestMapping("/status")
     public ModelAndView findAll (){
         List<Notifications> notify = notificationsService.findAll();
-//      stService.sentNotifications(); // в данном случаи вызывает отправку уведомления
         ModelAndView modelAndView = new ModelAndView("status");
         modelAndView.addObject("notify", notify);
         return modelAndView;
