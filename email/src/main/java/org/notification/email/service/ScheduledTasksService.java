@@ -74,7 +74,7 @@ public class ScheduledTasksService {
                 }
                 else{
                             notifications.setStatusValue(Status.ERRORS);
-                            System.out.println("Данный тип отправки не пред усмотрен");
+                            System.out.println("Данный тип отправки не предусмотрен");
                 }
             }
     }
