@@ -28,7 +28,8 @@ public class Notifications {
     private Long nsId;
 
     @Column(name="notification_type")
-    private String notificationType;
+    @Enumerated(EnumType.STRING)
+    private Type notificationType;
 
     @Column(name="recipient")
     private String recipient;

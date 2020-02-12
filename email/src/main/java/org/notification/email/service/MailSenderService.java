@@ -18,7 +18,7 @@ public class MailSenderService {
     }
 
     @Async
-    public void sendEmail( Notifications notifications) {
+    public void sendEmail(Notifications notifications) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(notifications.getRecipient());
         email.setSubject("email");
