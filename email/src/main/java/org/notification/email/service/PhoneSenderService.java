@@ -1,10 +1,9 @@
 package org.notification.email.service;
 
+import java.util.logging.Logger;
 
 import org.notification.email.entity.Notifications;
 import org.springframework.stereotype.Service;
-
-import java.util.logging.Logger;
 
 @Service("phoneSenders")
 public class PhoneSenderService {
