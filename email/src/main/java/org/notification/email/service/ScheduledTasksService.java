@@ -31,7 +31,7 @@ public class ScheduledTasksService {
         @Scheduled(cron="0 0/5 * 1/1 * *")
         public void sentNotifications(){
 
-            List<Notification> nList = nsService.findByStatus();
+            List<Notification> nList = nsService.findBystatusValue();
 
             for(Notification notification : nList) {
                 if(notification.getNotificationType()==Type.EMAIL){

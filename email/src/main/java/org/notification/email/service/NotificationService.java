@@ -27,8 +27,8 @@ public class NotificationService {
     }
 
 
-    public List<Notification> findByStatus(){
-        return notificationRepository.findByStatus(Status.WAIT.name());
+    public List<Notification> findBystatusValue(){
+        return notificationRepository.findBystatusValue(Status.WAIT);
     }
 
 }
