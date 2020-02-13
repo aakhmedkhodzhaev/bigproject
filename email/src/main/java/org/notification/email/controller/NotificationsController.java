@@ -1,58 +1,50 @@
 package org.notification.email.controller;
 
-import org.notification.email.entity.Notifications;
+import java.util.List;
+
+import org.notification.email.entity.Notification;
 import org.notification.email.entity.Status;
-import org.notification.email.entity.Type;
-import org.notification.email.repository.NotificationsRepository;
-import org.notification.email.service.NotificationsService;
+import org.notification.email.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 
 @Controller
 public class NotificationsController {
 
-    private final NotificationsRepository notificationsRepository;
-    private final NotificationsService notificationsService;
+    private final NotificationService notificationService;
 
     @Autowired
-    public NotificationsController(NotificationsRepository notificationsRepository, NotificationsService notificationsService) {
-        this.notificationsRepository = notificationsRepository;
-        this.notificationsService = notificationsService;
+    public NotificationsController(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
-
-    @RequestMapping(value="/send", method = RequestMethod.GET)
-    public ModelAndView notificationsRequest(ModelAndView modelAndView, Notifications notifications){
+    @GetMapping("/send")
+    public ModelAndView notificationsRequest(ModelAndView modelAndView){
         modelAndView.setViewName("send");
         return modelAndView;
     }
 
-    @RequestMapping(value="/send", method=RequestMethod.POST)
-    public ModelAndView registerNotification(ModelAndView modelAndView, Notifications notifications){
+    @PostMapping("/send")
+    public ModelAndView registerNotification(ModelAndView modelAndView, Notification notification){
 
-        notifications.getNotificationType();
-        notifications.getRecipient();
-        notifications.getMessage();
-        notifications.setStatusValue(Status.WAIT);
+        notification.setStatusValue(Status.WAIT);
 
-        notificationsRepository.save(notifications);
+        notificationService.saveNotify(notification);
 
-        modelAndView.addObject("Recipient", notifications.getRecipient());
+        modelAndView.addObject("Recipient", notification.getRecipient());
         modelAndView.setViewName("welldone");
 
         return modelAndView;
 
     }
 
-    @RequestMapping("/status")
+    @GetMapping("/status")
     public ModelAndView findAll (){
-        List<Notifications> notify = notificationsService.findAll();
+        List<Notification> notify = notificationService.findAll();
         ModelAndView modelAndView = new ModelAndView("status");
         modelAndView.addObject("notify", notify);
         return modelAndView;

@@ -2,17 +2,17 @@ package org.notification.email.service;
 
 import java.util.logging.Logger;
 
-import org.notification.email.entity.Notifications;
+import org.notification.email.entity.Notification;
 import org.springframework.stereotype.Service;
 
 @Service("phoneSenders")
 public class PhoneSenderService {
 
-    private static final Logger log = Logger.getLogger(Notifications.class.toString());
+    private static final Logger log = Logger.getLogger(Notification.class.toString());
 
-    public void sendSMS(Notifications notifications){
+    public void sendSMS(Notification notification){
 
-        log.info("Message sent: " + notifications);
+        log.info("Message sent: " + notification);
 
     }
 

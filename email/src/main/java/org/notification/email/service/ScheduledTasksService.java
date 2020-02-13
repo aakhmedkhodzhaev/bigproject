@@ -1,9 +1,8 @@
 package org.notification.email.service;
 
-import org.notification.email.entity.Notifications;
+import org.notification.email.entity.Notification;
 import org.notification.email.entity.Status;
 import org.notification.email.entity.Type;
-import org.notification.email.repository.NotificationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,14 +14,14 @@ import java.util.List;
 @Service("ScheduledTasks")
 public class ScheduledTasksService {
 
-        private final NotificationsRepository notificationsRepository;
+        private final NotificationService nsService;
         private final MailSenderService msService;
         private final PhoneSenderService psService;
         private final TelegramSenderService tsService;
 
     @Autowired
-    public ScheduledTasksService(NotificationsRepository notificationsRepository, MailSenderService msService, PhoneSenderService psService, TelegramSenderService tsService) {
-        this.notificationsRepository = notificationsRepository;
+    public ScheduledTasksService(NotificationService nsService, MailSenderService msService, PhoneSenderService psService, TelegramSenderService tsService) {
+        this.nsService = nsService;
         this.msService = msService;
         this.psService = psService;
         this.tsService = tsService;
@@ -32,48 +31,48 @@ public class ScheduledTasksService {
         @Scheduled(cron="0 0/5 * 1/1 * *")
         public void sentNotifications(){
 
-            List<Notifications> nList = notificationsRepository.findByStatus(Status.WAIT.name());
+            List<Notification> nList = nsService.findByStatus();
 
-            for(Notifications notifications: nList) {
-                if(notifications.getNotificationType()==Type.EMAIL){
+            for(Notification notification : nList) {
+                if(notification.getNotificationType()==Type.EMAIL){
                     try{
-                        msService.sendEmail(notifications);
-                        notifications.setStatusValue(Status.SENT);
-                        notificationsRepository.save(notifications);
+                        msService.sendEmail(notification);
+                        notification.setStatusValue(Status.SENT);
+                        nsService.saveNotify(notification);
 
                     } catch(Exception e){
                         e.getStackTrace();
-                        notifications.setStatusValue(Status.ERRORS);
-                        notificationsRepository.save(notifications);
+                        notification.setStatusValue(Status.ERRORS);
+                        nsService.saveNotify(notification);
                     }
                 }
-                else if(notifications.getNotificationType()==Type.PHONE){
+                else if(notification.getNotificationType()==Type.PHONE){
                     try{
-                        psService.sendSMS(notifications);
-                        notifications.setStatusValue(Status.SENT);
-                        notificationsRepository.save(notifications);
+                        psService.sendSMS(notification);
+                        notification.setStatusValue(Status.SENT);
+                        nsService.saveNotify(notification);
 
                     } catch(Exception e){
                         e.getStackTrace();
-                        notifications.setStatusValue(Status.ERRORS);
-                        notificationsRepository.save(notifications);
+                        notification.setStatusValue(Status.ERRORS);
+                        nsService.saveNotify(notification);
                     }
                 }
 
-                else if(notifications.getNotificationType()==Type.TELEGRAM){
+                else if(notification.getNotificationType()==Type.TELEGRAM){
                     try{
-                        tsService.sendTelegram(notifications);
-                        notifications.setStatusValue(Status.SENT);
-                        notificationsRepository.save(notifications);
+                        tsService.sendTelegram(notification);
+                        notification.setStatusValue(Status.SENT);
+                        nsService.saveNotify(notification);
 
                     } catch(Exception e){
                         e.getStackTrace();
-                        notifications.setStatusValue(Status.ERRORS);
-                        notificationsRepository.save(notifications);
+                        notification.setStatusValue(Status.ERRORS);
+                        nsService.saveNotify(notification);
                     }
                 }
                 else{
-                            notifications.setStatusValue(Status.ERRORS);
+                            notification.setStatusValue(Status.ERRORS);
                             System.out.println("Данный тип отправки не предусмотрен");
                 }
             }

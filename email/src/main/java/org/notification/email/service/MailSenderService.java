@@ -1,6 +1,6 @@
 package org.notification.email.service;
 
-import org.notification.email.entity.Notifications;
+import org.notification.email.entity.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,12 +18,12 @@ public class MailSenderService {
     }
 
     @Async
-    public void sendEmail(Notifications notifications) {
+    public void sendEmail(Notification notification) {
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(notifications.getRecipient());
+        email.setTo(notification.getRecipient());
         email.setSubject("email");
         email.setFrom("aakhmedkhodzhaev@gmail.com");
-        email.setText(notifications.getMessage());
+        email.setText(notification.getMessage());
 
         javaMailSender.send(email);
     }

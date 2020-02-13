@@ -21,18 +21,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="notifications   : ${notify}">
-                <td th:text="${notifications.notificationType}"></td>
-                <td th:text="${notifications.recipient}"></td>
-                <td th:text="${notifications.message}"></td>
-                <td th:text="${notifications.statusValue}"></td>
-                <td th:text="${notifications.creationDate}"></td>
-                <td th:text="${notifications.lastUpdate}"></td>
+            <tr th:each="notification   : ${notify}">
+                <td th:text="${notification.notificationType}"></td>
+                <td th:text="${notification.recipient}"></td>
+                <td th:text="${notification.message}"></td>
+                <td th:text="${notification.statusValue}"></td>
+                <td th:text="${notification.creationDate}"></td>
+                <td th:text="${notification.lastUpdate}"></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/send" style="color:#0000ff">Send notifications</a></p>
+    <p><a href="/send" style="color:#0000ff">Send notification</a></p>
 </div>
 </body>
 </html>
