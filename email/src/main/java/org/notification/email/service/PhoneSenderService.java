@@ -3,17 +3,23 @@ package org.notification.email.service;
 import java.util.logging.Logger;
 
 import org.notification.email.entity.Notification;
-import org.springframework.stereotype.Service;
+import org.notification.email.entity.Type;
+import org.notification.email.repository.SenderRepository;
+import org.springframework.stereotype.Component;
 
-@Service("phoneSenders")
-public class PhoneSenderService {
+
+@Component
+public class PhoneSenderService implements SenderRepository {
 
     private static final Logger log = Logger.getLogger(Notification.class.toString());
 
-    public void sendSMS(Notification notification){
+    public void send(Notification notification) {
 
-        log.info("Message sent: " + notification);
+            log.info("Message sent: " + notification);
+    }
 
+    public Type getType() {
+        return Type.PHONE;
     }
 
 }
