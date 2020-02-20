@@ -8,7 +8,6 @@ package org.notification.email.entity;
  * @others так же возмоно разработать тест, для проверки работы программы
  */
 
-
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -8,6 +8,7 @@
     <artifactId>tasks</artifactId>
     <packaging>pom</packaging>
     <version>3.0</version>
+
     <modules>
         <module>email</module>
     </modules>
@@ -32,7 +33,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -58,5 +58,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
