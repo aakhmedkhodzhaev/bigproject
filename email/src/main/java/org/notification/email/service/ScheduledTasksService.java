@@ -1,42 +1,49 @@
 package org.notification.email.service;
 
-import org.notification.email.entity.Notifications;
-import org.notification.email.repository.ScheduledTaskRepository;
+import java.util.List;
+
+import org.notification.email.entity.Notification;
+import org.notification.email.entity.Status;
+import org.notification.email.repository.SenderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service("ScheduledTasks")
 public class ScheduledTasksService {
 
-        private final ScheduledTaskRepository scheduledTaskRepository;
-        private final mailSenderService msService;
+    private final NotificationService nsService;
 
     @Autowired
-    public ScheduledTasksService(ScheduledTaskRepository scheduledTaskRepository, mailSenderService msService) {
-        this.scheduledTaskRepository = scheduledTaskRepository;
-        this.msService = msService;
+    public ScheduledTasksService(NotificationService nsService) {
+        this.nsService = nsService;
     }
 
-        @Async
-        @Scheduled(cron="* 20 * * * *")//(fixedRate = 30000)
-        public void sentNotifications(){
-            List<Notifications> nList = scheduledTaskRepository.findByStatus("Wait");
-            SimpleMailMessage email = new SimpleMailMessage();
+    @Autowired
+    private List<SenderRepository> srList;
 
-            for(Notifications notifications: nList){
-            email.setTo(notifications.getRecipient());
-            email.setSubject("email");
-            email.setFrom("aakhmedkhodzhaev@gmail.com");
-            email.setText(notifications.getMessage());
+    @Async
+    @Scheduled(cron = "0 0/5 * 1/1 * *")
+    public void sentNotifications() {
+        List<Notification> nList = nsService.findBystatusValue();
 
-            msService.sendEmail(email);
-            scheduledTaskRepository.setValue("Sent");
+        for (Notification notification : nList) {
+            for (SenderRepository sList : srList) {
+                if (sList.getType() == notification.getNotificationType()) {
+                    try {
+                        sList.send(notification);
+                        notification.setStatusValue(Status.SENT);
+                        nsService.saveNotify(notification);
+
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                        notification.setStatusValue(Status.ERRORS);
+                        nsService.saveNotify(notification);
+                    }
+                }
             }
+        }
     }
 }

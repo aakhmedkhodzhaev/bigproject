@@ -12,15 +12,15 @@ package org.notification.email.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Data
 @Table(name="notifications")
-public class Notifications {
+public class Notification {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -28,7 +28,8 @@ public class Notifications {
     private Long nsId;
 
     @Column(name="notification_type")
-    private String notificationType;
+    @Enumerated(EnumType.STRING)
+    private Type notificationType;
 
     @Column(name="recipient")
     private String recipient;
@@ -37,12 +38,12 @@ public class Notifications {
     private String message;
 
     @Column(name="status")
-    @Value("Sent")
-    private String statusValue;
+    @Enumerated(EnumType.STRING)
+    private Status statusValue;
 
     @CreationTimestamp
-    @Column(name="send_date")
-    private LocalDateTime sendDate;
+    @Column(name="creation_date")
+    private LocalDateTime creationDate;
 
     @UpdateTimestamp
     @Column(name="lastupdate")
